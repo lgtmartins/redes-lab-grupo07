@@ -24,11 +24,21 @@ ajuda:
 base:
 	docker build -t redes-lab-base:1 base/
 	@# A E4 declara `build: .` nos TRES roteadores apontando para a mesma tag.
-	@# O compose os constroi em paralelo e dois chegam juntos ao passo de
-	@# exportar a imagem: um perde a corrida com "image already exists" e o
-	@# `up` inteiro aborta — so no primeiro clone, e depois nunca mais, o que
-	@# torna o defeito invisivel para quem ja rodou uma vez. Construir aqui,
-	@# em serie, faz o compose encontrar a imagem pronta e nao construir nada.
+	@# Com docker compose 2.40.3 (Docker 29.1.3, Ubuntu 26.04 no WSL2) os tres
+	@# sao construidos em paralelo, dois chegam juntos ao passo de exportar a
+	@# imagem e um perde a corrida com "image already exists": o primeiro
+	@# `make up E=4` de um clone limpo aborta. Como a imagem fica criada pela
+	@# tentativa que ganhou, nunca mais reaparece — invisivel para quem ja
+	@# rodou uma vez.
+	@#
+	@# NAO reproduz no Cloud Shell (Docker 29.7.2, compose v5.5.0): la o
+	@# laboratorio original sobe de primeira, testado. Nao isolamos qual das
+	@# duas versoes explica a diferenca; o compose v5 provavelmente deduplica
+	@# servicos que compartilham tag e contexto.
+	@#
+	@# Construir aqui, em serie, e barato e torna o `up` deterministico nos
+	@# dois ambientes. Fica como precaucao, nao como correcao de um defeito
+	@# do laboratorio.
 	docker build -t redes-lab-bird:1 e4-roteamento/
 
 # O Cloud Shell carrega o br_netfilter com bridge-nf-call-iptables=1: quadros

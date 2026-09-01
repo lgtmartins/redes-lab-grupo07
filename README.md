@@ -355,6 +355,45 @@ o cadeado promete são diferentes, e essa distinção entra na cartilha.
 
 **A cartilha** está em [`e5-seguranca/cartilha/`](e5-seguranca/cartilha/).
 
+## Onde isto foi verificado
+
+As cinco entregas ficaram verdes em **dois ambientes independentes**, cada um a
+partir de um clone limpo deste repositório:
+
+| Ambiente | Docker | Compose | Resultado |
+|---|---|---|---|
+| Ubuntu 26.04 no WSL2 | 29.1.3 | 2.40.3 | E1–E5 completas |
+| Google Cloud Shell | 29.7.2 | v5.5.0 | E1–E5 completas |
+
+O segundo é o que conta: é o ambiente da correção, e o teste foi feito clonando
+do GitHub numa sessão nova, sem nada pré-construído.
+
+### Uma diferença entre os dois, e o que ela nos ensinou
+
+No WSL2, o primeiro `make up E=4` de um clone limpo **falhava**:
+
+```
+failed to solve: image "docker.io/library/redes-lab-bird:1": already exists
+```
+
+Os três roteadores da E4 declaram `build: .` apontando para a mesma tag, o
+compose 2.40.3 os constrói em paralelo, e dois chegam juntos ao passo de
+exportar a imagem. Um perde a corrida e o `up` inteiro aborta. O detalhe
+traiçoeiro é que a imagem fica criada pela tentativa que ganhou — na segunda
+vez tudo funciona, e o defeito some.
+
+Passamos a construir a imagem do BIRD no `make base`, em série, e o problema
+desapareceu. **Mas o laboratório original não falha no Cloud Shell:** testamos
+lá, clonando o repositório do professor, e ele sobe de primeira. Não isolamos
+qual variável explica a diferença — o compose v5 provavelmente deduplica
+serviços que compartilham tag e contexto de build.
+
+Então a mudança no `Makefile` é **precaução**, não conserto de defeito do
+laboratório. Registramos assim de propósito: a primeira versão deste README
+afirmava que o problema atingiria a turma inteira, e essa afirmação não
+sobreviveu ao teste. Medir num ambiente e generalizar para outro é o mesmo erro
+que o roteiro da E1 combate ao exigir as duas metades da prova.
+
 ## Evidências
 
 Geradas na Cloud Shell, uma por entrega:
