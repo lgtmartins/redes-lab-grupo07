@@ -1,0 +1,15 @@
+# Fim de linha. O git no Windows converte para CRLF ao clonar, e o `sh` do
+# contêiner Alpine não aceita o \r: o script morre com "not found" apontando
+# uma linha que está visivelmente correta. Como o laboratório é clonado numa
+# Cloud Shell Linux mas editado aqui, forçamos LF nos arquivos que rodam
+# dentro do contêiner.
+*.sh        text eol=lf
+*.yml       text eol=lf
+*.conf      text eol=lf
+Makefile    text eol=lf
+Dockerfile  text eol=lf
+token.txt   text eol=lf
+
+# As capturas são a evidência — nunca deixe o git tocar nos bytes delas.
+*.pcap      binary
+*.png       binary

@@ -1,0 +1,530 @@
+<title>Senha sem cadeado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+
+<style>
+  :root {
+    --ground:    #F6F8FA;
+    --surface:   #FFFFFF;
+    --ink:       #14181F;
+    --muted:     #5A6472;
+    --hairline:  #DDE3EA;
+    --accent:    #0E7C86;
+    --accent-bg: #E4F2F3;
+    --danger:    #A93A2C;
+    --danger-bg: #FAEAE7;
+    --safe:      #1D7048;
+    --safe-bg:   #E5F2EB;
+
+    --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --body: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:    #101318;
+      --surface:   #191D25;
+      --ink:       #E9EDF3;
+      --muted:     #98A3B2;
+      --hairline:  #2C333D;
+      --accent:    #45C3CC;
+      --accent-bg: #10333A;
+      --danger:    #E08375;
+      --danger-bg: #3A211D;
+      --safe:      #5CC08D;
+      --safe-bg:   #16321F;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:    #101318;
+    --surface:   #191D25;
+    --ink:       #E9EDF3;
+    --muted:     #98A3B2;
+    --hairline:  #2C333D;
+    --accent:    #45C3CC;
+    --accent-bg: #10333A;
+    --danger:    #E08375;
+    --danger-bg: #3A211D;
+    --safe:      #5CC08D;
+    --safe-bg:   #16321F;
+  }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 18px;
+    line-height: 1.62;
+  }
+
+  .folha {
+    max-width: 44rem;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.75rem;
+  }
+
+  /* ---------- cabeçalho ---------- */
+
+  .selo {
+    font-family: var(--display);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2.4rem, 7vw, 3.6rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+    margin: 0.5rem 0 0;
+  }
+
+  .linha-fina {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 34rem;
+    margin: 0.85rem 0 0;
+    text-wrap: pretty;
+  }
+
+  /* ---------- as duas barras de endereço (a tese) ---------- */
+
+  .barras {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .barra {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.7rem 0.9rem;
+    border-radius: 999px;
+    font-family: var(--mono);
+    font-size: 0.95rem;
+    border: 1px solid var(--hairline);
+    background: var(--surface);
+    overflow: hidden;
+  }
+
+  .barra svg { flex: 0 0 auto; }
+
+  .barra .rotulo {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .barra .endereco {
+    color: var(--muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .barra--risco { border-color: var(--danger); background: var(--danger-bg); }
+  .barra--risco .rotulo { color: var(--danger); }
+
+  .barra--ok { border-color: var(--safe); background: var(--safe-bg); }
+  .barra--ok .rotulo { color: var(--safe); }
+
+  .barra-nota {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin: 0.35rem 0 0;
+    padding-left: 0.9rem;
+  }
+
+  /* ---------- seções ---------- */
+
+  section { display: flex; flex-direction: column; gap: 1rem; }
+
+  h2 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.55rem;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+    margin: 0;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--ink);
+  }
+
+  p { margin: 0; }
+
+  strong { font-weight: 600; }
+
+  .destaque { color: var(--danger); font-weight: 600; }
+
+  /* ---------- o pacote ---------- */
+
+  .pacote {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-left: 4px solid var(--danger);
+    padding: 1.1rem 1.2rem;
+    font-family: var(--mono);
+    font-size: 0.86rem;
+    line-height: 1.75;
+    color: var(--muted);
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  .pacote b {
+    color: var(--danger);
+    font-weight: 600;
+    background: var(--danger-bg);
+    padding: 0.1em 0.3em;
+  }
+
+  .legenda {
+    font-family: var(--display);
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ---------- figura ---------- */
+
+  figure { margin: 0; display: flex; flex-direction: column; gap: 0.7rem; }
+
+  figure svg {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    color: var(--ink);
+  }
+
+  /* O hex fixo não sobrevive à troca de tema: no fundo escuro o vermelho
+     escuro some. As marcas de risco do diagrama saem dos mesmos tokens que
+     o resto da página. */
+  figure svg .risco-traco { stroke: var(--danger); }
+  figure svg .risco-texto { fill: var(--danger); }
+
+  code {
+    font-family: var(--mono);
+    font-size: 0.88em;
+    background: var(--ground);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+  }
+
+  figcaption {
+    font-family: var(--display);
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ---------- recomendações ---------- */
+
+  .conselhos {
+    display: grid;
+    gap: 1px;
+    background: var(--hairline);
+    border: 1px solid var(--hairline);
+  }
+
+  .conselho {
+    background: var(--surface);
+    padding: 1.15rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .conselho h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: var(--accent);
+  }
+
+  .conselho p { font-size: 0.98rem; }
+
+  /* ---------- espaço para o print do grupo ---------- */
+
+  .slot {
+    border: 2px dashed var(--accent);
+    background: var(--accent-bg);
+    padding: 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .slot .slot-titulo {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--accent);
+  }
+
+  .slot p { font-size: 0.92rem; color: var(--muted); }
+
+  .slot img { display: block; margin: 0 auto; }
+
+  /* ---------- rodapé ---------- */
+
+  footer {
+    border-top: 1px solid var(--hairline);
+    padding-top: 1.25rem;
+    font-family: var(--display);
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: var(--muted);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  @media print {
+    body { background: #FFFFFF; color: #000000; font-size: 11pt; }
+    .folha { padding: 0; gap: 1.4rem; max-width: none; }
+    h1 { font-size: 30pt; }
+    h2 { font-size: 14pt; padding-top: 0.7rem; }
+    .slot { border-color: #999999; background: #FFFFFF; }
+    section { break-inside: avoid; }
+  }
+</style>
+
+<div class="folha">
+
+  <header>
+    <div class="selo">Cartilha de rede sem fio segura</div>
+    <h1>Senha sem cadeado</h1>
+    <p class="linha-fina">
+      Quando você digita uma senha num site sem cadeado, usando uma rede que
+      não é sua, ela viaja escrita — em letras que qualquer um no caminho
+      consegue ler. Isto aqui é uma foto disso acontecendo, e o que fazer a
+      respeito.
+    </p>
+  </header>
+
+  <section>
+    <div class="barras">
+      <div class="barra barra--risco">
+        <svg width="15" height="15" viewBox="0 0 16 16" role="img" aria-label="Aviso de site não seguro">
+          <path d="M8 1.6 15 14H1L8 1.6Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+          <rect x="7.25" y="6" width="1.5" height="4" fill="currentColor"></rect>
+          <rect x="7.25" y="11" width="1.5" height="1.5" fill="currentColor"></rect>
+        </svg>
+        <span class="rotulo">Não seguro</span>
+        <span class="endereco">loja-do-bairro.com.br/entrar</span>
+      </div>
+      <div class="barra barra--ok">
+        <svg width="15" height="15" viewBox="0 0 16 16" role="img" aria-label="Cadeado fechado">
+          <rect x="3" y="7" width="10" height="7.5" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+          <path d="M5.5 7V4.9a2.5 2.5 0 0 1 5 0V7" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+        </svg>
+        <span class="rotulo">Cadeado</span>
+        <span class="endereco">loja-do-bairro.com.br/entrar</span>
+      </div>
+    </div>
+    <p class="barra-nota">
+      A mesma loja, a mesma página, a mesma senha. A diferença inteira está
+      naquele pedacinho à esquerda do endereço.
+    </p>
+  </section>
+
+  <section>
+    <h2>O que acontece quando não tem cadeado</h2>
+    <p>
+      Sem cadeado, o que você digita sai do celular <strong>do jeito que
+      você digitou</strong>. Não vai embaralhado, não vai escondido: vai
+      escrito. Quem estiver no caminho entre o seu celular e o site não
+      precisa quebrar nada para ler — é só olhar.
+    </p>
+    <p>
+      Abaixo está o que sai do aparelho. Nós montamos essa rede no laboratório
+      da faculdade, inventamos uma senha — <code>grupo-07</code> — e gravamos o
+      que passou por ela. Isto não é um desenho: é o conteúdo exato do arquivo
+      que gravamos, copiado de dentro dele.
+    </p>
+    <div class="pacote">GET / HTTP/1.1
+Host: 10.0.20.20:8080
+User-Agent: curl/8.14.1
+Accept: */*
+Authorization: Bearer <b>grupo-07</b></div>
+    <p>
+      A última linha é a que carrega a senha. Ela não está embaralhada, não
+      está escondida atrás de nada: está escrita, do lado do endereço de quem
+      pediu e de quem recebeu. Foi assim que ela atravessou a rede.
+    </p>
+    <p class="legenda">
+      Com cadeado, o mesmo trecho vira um embaralhado sem sentido. Gravamos os
+      dois casos: no primeiro a senha aparece; no segundo, procuramos por ela
+      e ela não está em lugar nenhum.
+    </p>
+  </section>
+
+  <section>
+    <h2>Quem consegue ler</h2>
+    <p>
+      Não é qualquer pessoa sentada no café. O aparelho que distribui a
+      internet do lugar entrega cada mensagem só para quem ela é — as outras
+      mesas não veem a sua.
+    </p>
+    <p>
+      Quem vê tudo é <strong>quem está no caminho</strong>: o aparelho de
+      Wi‑Fi do estabelecimento, e quem tiver acesso a ele. Numa rede sua, em
+      casa, esse aparelho é seu. Numa rede que não é sua, ele é de outra
+      pessoa — e você não tem como saber de quem, nem o que ela faz com o que
+      passa por ali.
+    </p>
+
+    <figure>
+      <svg viewBox="0 0 620 190" role="img" aria-label="O celular envia a senha para o site passando pelo aparelho de Wi-Fi do lugar; é nesse ponto do caminho que a senha pode ser lida.">
+        <defs>
+          <marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill="currentColor"></path>
+          </marker>
+        </defs>
+
+        <!-- celular -->
+        <rect x="20" y="60" width="72" height="64" rx="8" fill="none" stroke="currentColor" stroke-width="1.6"></rect>
+        <text x="56" y="97" text-anchor="middle" font-size="12" font-family="Archivo, sans-serif" fill="currentColor">celular</text>
+        <text x="56" y="146" text-anchor="middle" font-size="11" font-family="Archivo, sans-serif" fill="currentColor" opacity="0.65">você</text>
+
+        <!-- wifi do lugar -->
+        <rect x="254" y="60" width="112" height="64" rx="8" fill="none" class="risco-traco" stroke-width="2.2"></rect>
+        <text x="310" y="90" text-anchor="middle" font-size="12" font-family="Archivo, sans-serif" class="risco-texto" font-weight="600">Wi-Fi do lugar</text>
+        <text x="310" y="107" text-anchor="middle" font-size="11" font-family="Archivo, sans-serif" class="risco-texto">quem vê tudo</text>
+        <text x="310" y="146" text-anchor="middle" font-size="11" font-family="Archivo, sans-serif" class="risco-texto" opacity="0.85">não é seu</text>
+
+        <!-- site -->
+        <rect x="528" y="60" width="72" height="64" rx="8" fill="none" stroke="currentColor" stroke-width="1.6"></rect>
+        <text x="564" y="97" text-anchor="middle" font-size="12" font-family="Archivo, sans-serif" fill="currentColor">o site</text>
+        <text x="564" y="146" text-anchor="middle" font-size="11" font-family="Archivo, sans-serif" fill="currentColor" opacity="0.65">destino</text>
+
+        <!-- setas -->
+        <line x1="92" y1="92" x2="246" y2="92" stroke="currentColor" stroke-width="1.6" marker-end="url(#seta)"></line>
+        <text x="169" y="80" text-anchor="middle" font-size="11.5" font-family="Archivo, sans-serif" fill="currentColor">sua senha</text>
+
+        <line x1="374" y1="92" x2="520" y2="92" stroke="currentColor" stroke-width="1.6" marker-end="url(#seta)"></line>
+        <text x="447" y="80" text-anchor="middle" font-size="11.5" font-family="Archivo, sans-serif" fill="currentColor">sua senha</text>
+
+        <!-- marcador de leitura -->
+        <line x1="310" y1="60" x2="310" y2="34" class="risco-traco" stroke-width="1.6"></line>
+        <text x="310" y="26" text-anchor="middle" font-size="12" font-family="Archivo, sans-serif" class="risco-texto" font-weight="600">a senha passa por aqui, legível</text>
+      </svg>
+      <figcaption>
+        Sem cadeado, a senha atravessa o aparelho do lugar escrita como você a
+        digitou. Com cadeado, ela também passa por ali — só que embaralhada, e
+        o embaralhado só o site consegue desfazer.
+      </figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Como reconhecer, no celular</h2>
+    <p>
+      A barra de endereço do celular é pequena e esconde metade da informação.
+      Três coisas para olhar antes de digitar qualquer senha:
+    </p>
+    <div class="conselhos">
+      <div class="conselho">
+        <h3>Toque na barra de endereço</h3>
+        <p>
+          Ela aparece encurtada. Ao tocar, o endereço completo se abre — é ali
+          que se vê se o começo é <span class="destaque">http://</span>, que
+          não protege, ou <strong>https://</strong>, que protege.
+        </p>
+      </div>
+      <div class="conselho">
+        <h3>Procure o cadeado, e leia o aviso</h3>
+        <p>
+          Navegador que escreve <span class="destaque">Não seguro</span> está
+          dizendo exatamente isso. Não é um detalhe técnico: é um recado para
+          você, naquela tela, antes de digitar.
+        </p>
+      </div>
+      <div class="conselho">
+        <h3>Cadeado não é selo de honestidade</h3>
+        <p>
+          O cadeado garante que ninguém no caminho lê o que você mandou. Ele
+          não garante que o site do outro lado é confiável. Um site golpista
+          também pode ter cadeado — confira o endereço, letra por letra.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Três coisas para fazer</h2>
+    <div class="conselhos">
+      <div class="conselho">
+        <h3>Sem cadeado, não digite</h3>
+        <p>
+          Nem senha, nem número de cartão, nem CPF. Se a página pede algo
+          assim e não tem cadeado, feche. Não existe motivo legítimo para um
+          site pedir sua senha sem proteger o caminho.
+        </p>
+      </div>
+      <div class="conselho">
+        <h3>Em rede que não é sua, use os dados do celular</h3>
+        <p>
+          Para banco, compra e qualquer coisa com senha, desligue o Wi‑Fi do
+          lugar e use a internet do seu plano. É mais lento e resolve o
+          problema inteiro: o caminho volta a ser da operadora, não do café.
+        </p>
+      </div>
+      <div class="conselho">
+        <h3>Ligue a verificação em duas etapas</h3>
+        <p>
+          É aquele código que chega no celular na hora de entrar. Com ela
+          ligada, quem descobrir a sua senha ainda não consegue entrar — e
+          você fica sabendo que alguém tentou.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>A evidência do nosso grupo</h2>
+    <div class="slot">
+      <div class="slot-titulo">Espaço para o print do Wireshark</div>
+      <p>
+        Substituam este bloco pela imagem de <code>claro.pcap</code> aberto no
+        Wireshark, com a linha <code>Authorization: Bearer &lt;token do
+        grupo&gt;</code> visível e destacada.<br>
+        No HTML: troquem esta <code>&lt;div class="slot"&gt;</code> por
+        <code>&lt;img src="captura-http.png" alt="..."&gt;</code>.
+      </p>
+    </div>
+    <p class="legenda">
+      A captura foi feita apenas dentro da nossa própria rede de laboratório,
+      entre máquinas nossas, com uma senha inventada por nós. Capturar o
+      tráfego de uma rede alheia é justamente aquilo contra o que esta
+      cartilha alerta.
+    </p>
+  </section>
+
+  <footer>
+    <div>
+      Produzido pelo <strong>grupo-07</strong> — Luiz Guilherme Tiritan Martins,
+      Pedro Guermandi Bressan e Gustavo Messa Corbe · Redes e Sistemas
+      Distribuídos · Prof. Me. Luiz Ricardo Mantovani da Silva
+    </div>
+    <div>
+      Atividade de extensão. Pode ser copiada, impressa e distribuída
+      livremente.
+    </div>
+  </footer>
+
+</div>
