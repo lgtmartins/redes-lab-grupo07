@@ -353,7 +353,12 @@ quem o navegador já confie garantiu a identidade dele — e não sobre a cifra 
 falhado. A cifra funcionou: é isso que `cifrado.pcap` mostra. As duas coisas que
 o cadeado promete são diferentes, e essa distinção entra na cartilha.
 
-**A cartilha** está em [`e5-seguranca/cartilha/`](e5-seguranca/cartilha/).
+**A cartilha** está em [`e5-seguranca/cartilha/`](e5-seguranca/cartilha/), com
+a captura do próprio grupo embutida no arquivo.
+
+**O registro da atividade de extensão** — para quem apresentamos, quantas
+pessoas, o que perguntaram e o que mudamos por causa disso — fica em
+[`e5-seguranca/extensao/`](e5-seguranca/extensao/).
 
 ## Onde isto foi verificado
 
