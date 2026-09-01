@@ -259,15 +259,17 @@ banco de dados.
 
 ## Entrega 4 — Convergência e o custo do vetor de distância
 
-**Tempo medido: 21 s numa execução, 30 s na seguinte** — mesma topologia, mesma
-máquina, nada alterado entre as duas. Não é ruído de medição: é o resultado.
+**Tempo medido: 21 s, depois 30 s, depois 14 s** — três execuções, mesma
+topologia, mesma máquina, nada alterado entre elas. Não é ruído de medição: é o
+resultado.
 
 O RIP anuncia a tabela **a cada 30 segundos**, e a notícia da queda só começa a
 andar no próximo anúncio. Se o enlace cai logo depois de um anúncio, espera-se
 quase o ciclo inteiro; se cai pouco antes do seguinte, a notícia sai quase de
 imediato. O tempo de convergência do vetor de distância não é um número, é um
 **intervalo** — aqui, algo entre poucos segundos e o ciclo de 30 s, mais o tempo
-de a nova rota descer para a tabela do kernel.
+de a nova rota descer para a tabela do kernel. Os 14 s e os 30 s que medimos são
+as duas pontas desse intervalo aparecendo na prática.
 
 Isso responde a "quanto custa a convergência" melhor que qualquer valor único, e
 é a razão de o roteiro comparar o **antes** com o **depois** em vez de cravar um
