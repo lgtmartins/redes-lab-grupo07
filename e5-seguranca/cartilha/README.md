@@ -4,28 +4,25 @@ Material de **extensão** da Entrega 5. Público-alvo: gente que não estuda
 redes — familiares, outra turma, uma associação de bairro, uma escola.
 
 Arquivo: [`cartilha.html`](cartilha.html). Abre em qualquer navegador, sem
-servidor e sem internet (só as fontes vêm do Google Fonts; sem elas o texto
-continua legível nas fontes de sistema).
+servidor e sem internet — a captura vai embutida no próprio arquivo. Só as
+fontes vêm do Google Fonts; sem elas o texto continua legível nas fontes de
+sistema.
 
-## O que falta para ela ficar pronta
+## O que já está pronto
 
-Duas coisas, e as duas são de vocês:
+- **A captura do grupo está na cartilha.** `captura-http.png` é o print
+  original do Wireshark (`Seguir Fluxo TCP` sobre `claro.pcap`);
+  `captura-http-recorte.png` é o mesmo print sem o espaço vazio, e é essa
+  versão que está **embutida no HTML como data URI**. Embutida de propósito:
+  assim a cartilha é um arquivo só, que funciona publicada, impressa e sem
+  internet — não adianta levar uma página que depende de baixar imagem para
+  apresentar num lugar com Wi-Fi ruim.
+- **O nome do grupo** está no rodapé.
 
-1. **A imagem central tem de ser a captura do grupo.** O enunciado é explícito
-   sobre isso — não vale figura da internet. Na seção "A evidência do nosso
-   grupo" há um bloco tracejado marcando o lugar. Depois de rodar
-   `make verificar E=5`, abram `claro.pcap` no Wireshark, use *Follow → TCP
-   Stream*, deixem visível a linha `Authorization: Bearer <token do grupo>`,
-   tirem o print, salvem como `captura-http.png` nesta pasta e troquem no HTML:
+## O que ainda falta
 
-   ```html
-   <!-- de: -->
-   <div class="slot"> … </div>
-   <!-- para: -->
-   <img src="captura-http.png" alt="Captura do Wireshark mostrando a senha em texto legível dentro do pacote">
-   ```
-
-2. **O nome do grupo no rodapé**, no lugar de `[nome do grupo]`.
+Nada no arquivo. O que falta acontece fora dele: apresentar a um público real
+e revisar depois do que ouvirem. Veja os degraus abaixo.
 
 ## Para imprimir
 

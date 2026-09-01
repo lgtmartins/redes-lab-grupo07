@@ -1,0 +1,612 @@
+<title>Reta final do grupo-07</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@500;700;900&family=Public+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap">
+
+<style>
+  :root {
+    --ground:   #F4F5F1;
+    --surface:  #FFFFFF;
+    --sunken:   #EAECE6;
+    --ink:      #191C18;
+    --muted:    #5C6459;
+    --faint:    #8A9285;
+    --rule:     #D6DACF;
+    --accent:   #1F5D3F;
+    --accent-2: #C25A1E;
+    --accent-bg:#E2EDE6;
+
+    --display: "Chivo", "Arial Black", sans-serif;
+    --body: "Public Sans", -apple-system, "Segoe UI", sans-serif;
+    --mono: "Roboto Mono", Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:   #141613;
+      --surface:  #1D201B;
+      --sunken:   #262A23;
+      --ink:      #E8EBE4;
+      --muted:    #A0A899;
+      --faint:    #757D6F;
+      --rule:     #333829;
+      --accent:   #67C08D;
+      --accent-2: #E8945C;
+      --accent-bg:#1B2E23;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:   #141613;
+    --surface:  #1D201B;
+    --sunken:   #262A23;
+    --ink:      #E8EBE4;
+    --muted:    #A0A899;
+    --faint:    #757D6F;
+    --rule:     #333829;
+    --accent:   #67C08D;
+    --accent-2: #E8945C;
+    --accent-bg:#1B2E23;
+  }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .pagina {
+    max-width: 50rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.25rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(2rem, 6vw, 3rem);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+    margin: 0.4rem 0 0;
+  }
+
+  .sub {
+    color: var(--muted);
+    max-width: 38rem;
+    margin: 0.7rem 0 0;
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: -0.02em;
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+  }
+
+  h2 .num {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0;
+  }
+
+  h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1rem;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  p { margin: 0; }
+  strong { font-weight: 700; }
+
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 3px solid var(--ink);
+  }
+
+  .passos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .passos li {
+    display: grid;
+    grid-template-columns: 1.6rem 1fr;
+    gap: 0.75rem;
+    align-items: start;
+  }
+
+  .passos li::before {
+    content: "";
+    width: 1.05rem;
+    height: 1.05rem;
+    margin-top: 0.28rem;
+    border: 2px solid var(--faint);
+    border-radius: 3px;
+  }
+
+  .aviso {
+    background: var(--accent-bg);
+    border-left: 4px solid var(--accent);
+    padding: 0.9rem 1.1rem;
+    font-size: 0.95rem;
+  }
+
+  .alerta {
+    background: var(--sunken);
+    border-left: 4px solid var(--accent-2);
+    padding: 0.9rem 1.1rem;
+    font-size: 0.95rem;
+  }
+
+  /* ---------- degraus da nota ---------- */
+
+  .degraus { display: flex; flex-direction: column; gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+
+  .degrau {
+    background: var(--surface);
+    padding: 1rem 1.15rem;
+    display: grid;
+    grid-template-columns: 3.6rem 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .degrau .nota {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 1.25rem;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .degrau p { font-size: 0.95rem; }
+
+  /* ---------- roteiro cronometrado ---------- */
+
+  .cronometro {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .bloco {
+    background: var(--surface);
+    display: grid;
+    grid-template-columns: 5.2rem 1fr;
+  }
+
+  .bloco .tempo {
+    background: var(--sunken);
+    padding: 0.9rem 0.7rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    border-right: 1px solid var(--rule);
+  }
+
+  .bloco .tempo b { display: block; color: var(--ink); font-weight: 500; font-size: 0.95rem; }
+
+  .bloco .conteudo {
+    padding: 0.9rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .bloco .conteudo p { font-size: 0.94rem; }
+
+  .quem {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+  }
+
+  /* ---------- perguntas ---------- */
+
+  .tabela-wrap { overflow-x: auto; border: 1px solid var(--rule); }
+
+  table { border-collapse: collapse; width: 100%; font-size: 0.9rem; min-width: 34rem; }
+
+  th, td { text-align: left; padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+
+  th {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: var(--sunken);
+    position: sticky;
+    top: 0;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+
+  td:first-child { font-family: var(--mono); color: var(--faint); font-variant-numeric: tabular-nums; width: 2rem; }
+
+  .dado { font-family: var(--mono); font-size: 0.85em; color: var(--accent); white-space: nowrap; }
+
+  code {
+    font-family: var(--mono);
+    font-size: 0.88em;
+    background: var(--sunken);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+  }
+
+  .campos {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .campo { display: flex; flex-direction: column; gap: 0.3rem; }
+
+  .campo .rot { font-family: var(--display); font-weight: 700; font-size: 0.9rem; }
+
+  .campo .linha { border-bottom: 1px dashed var(--rule); height: 1.4rem; }
+
+  .campo small { color: var(--muted); font-size: 0.82rem; }
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding-top: 1.2rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  a { color: var(--accent); }
+
+  @media print {
+    body { background: #fff; color: #000; font-size: 10.5pt; }
+    .pagina { padding: 0; gap: 1.3rem; max-width: none; }
+    section { break-inside: avoid; }
+  }
+</style>
+
+<div class="pagina">
+
+  <header>
+    <div class="eyebrow">grupo-07 · o que falta</div>
+    <h1>Reta final</h1>
+    <p class="sub">
+      O código está entregue e verde nos dois ambientes. O que sobra não se
+      resolve no teclado: depende de sair da sala, ouvir gente de fora e
+      voltar. É onde estão os 0,8 ponto que separam 1,2 de 2,0 na Extensão — e
+      são os mais fáceis de perder por falta de registro, não por falta de
+      trabalho.
+    </p>
+  </header>
+
+  <div class="alerta">
+    <strong>Confirmem as datas com o professor.</strong> A página da disciplina
+    diz que a E5 é na semana 15 e a apresentação na 18; os arquivos dentro do
+    repositório (<code>entregas/E5.md</code> e <code>APRESENTACAO.md</code>)
+    dizem semana 13 e 14. As duas fontes discordam, e a diferença é de um mês.
+    Perguntem antes de marcar a apresentação da cartilha com o público — ela
+    precisa acontecer <em>antes</em> da entrega, não depois.
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> Apresentar a cartilha fora da sala</h2>
+    <p>
+      Extensão é para a sociedade, não para o professor. O material precisa
+      chegar a gente que não estuda redes — e vocês precisam <strong>provar
+      que chegou</strong>.
+    </p>
+
+    <h3>Escolher o público</h3>
+    <p>
+      Sirva qualquer grupo real fora da turma. Em ordem de facilidade: a
+      família reunida num fim de semana; a turma de outro curso da faculdade;
+      uma sala do ensino médio de uma escola perto; o pessoal do trabalho de
+      alguém do grupo; uma associação de bairro ou grupo de idosos.
+    </p>
+    <div class="aviso">
+      <strong>O público mais fácil é também o melhor:</strong> pessoas mais
+      velhas da própria família. Elas usam Wi‑Fi de shopping e de hospital, não
+      sabem o que é um pacote, e fazem perguntas de verdade — que é justamente
+      o que vocês precisam coletar para o degrau de 2,0.
+    </div>
+
+    <h3>O que fazer no dia</h3>
+    <ul class="passos">
+      <li><span><strong>Levem a cartilha impressa ou na tela.</strong> Se for
+      no celular, abram a página antes e deixem aberta — não dependam da rede
+      do lugar.</span></li>
+      <li><span><strong>Comecem pela tela, não pela teoria.</strong> Mostrem as
+      duas barras de endereço da cartilha e perguntem: "qual dessas vocês
+      digitariam a senha do banco?". Deixem responderem antes de explicar.</span></li>
+      <li><span><strong>Mostrem o print do Wireshark de vocês.</strong> É o
+      momento que convence. "Esta senha aqui, escrita, saiu de um computador
+      nosso e nós conseguimos ler no caminho."</span></li>
+      <li><span><strong>Fechem pelas três recomendações.</strong> Nunca
+      terminem no susto — todo alerta sai com o que fazer a respeito.</span></li>
+      <li><span><strong>Peçam perguntas, e não respondam rápido demais.</strong>
+      O silêncio de três segundos é o que faz alguém levantar a mão.</span></li>
+    </ul>
+
+    <h3>O registro — sem isto, não conta</h3>
+    <ul class="passos">
+      <li><span><strong>Foto do momento</strong>, mostrando as pessoas e o
+      material. Peçam autorização antes de fotografar; se alguém não quiser
+      aparecer, fotografem de costas ou só o material sendo mostrado.</span></li>
+      <li><span><strong>Lista de presença</strong>, mesmo informal: nome e
+      assinatura num papel, ou uma foto do grupo com a contagem anotada.</span></li>
+      <li><span><strong>Data, local e duração</strong> anotados na hora, não de
+      memória depois.</span></li>
+      <li><span><strong>As perguntas que fizeram</strong>, escritas do jeito
+      que saíram da boca da pessoa. Uma pessoa do grupo apresenta enquanto
+      outra anota — não tentem fazer as duas coisas.</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> Revisar depois do que ouviram</h2>
+    <p>
+      Este é o degrau raro. Não é "apresentamos e deu certo" — é mostrar que o
+      material <strong>mudou</strong> por causa do que o público disse.
+    </p>
+
+    <div class="degraus">
+      <div class="degrau">
+        <div class="nota">1,2</div>
+        <p>Verificação verde, os dois <code>.pcap</code> no repositório, e a
+        cartilha pronta com a captura do próprio grupo. <strong>Vocês já
+        têm tudo isto, menos o print.</strong></p>
+      </div>
+      <div class="degrau">
+        <div class="nota">1,7</div>
+        <p>E o material apresentado a um público real fora da sala, com
+        registro: foto, lista ou gravação.</p>
+      </div>
+      <div class="degrau">
+        <div class="nota">2,0</div>
+        <p>E a evidência de retorno: quantas pessoas alcançadas, o que
+        perguntaram, e uma versão do material <strong>revisada depois</strong>
+        do que ouviram.</p>
+      </div>
+    </div>
+
+    <h3>Como transformar uma pergunta em revisão</h3>
+    <p>
+      Toda pergunta do público é um lugar onde a cartilha não foi clara o
+      bastante. Três exemplos do que costuma aparecer e do que fazer com cada
+      um:
+    </p>
+    <div class="tabela-wrap">
+      <table>
+        <thead>
+          <tr><th>Se alguém perguntar</th><th>O que isso revela</th><th>A revisão</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-family:inherit;color:inherit;width:auto">"Então o cadeado quer dizer que o site é confiável?"</td>
+            <td>A distinção entre sigilo e identidade não passou</td>
+            <td>Reforçar o bloco "cadeado não é selo de honestidade", talvez com um exemplo de site golpista com cadeado</td>
+          </tr>
+          <tr>
+            <td style="font-family:inherit;color:inherit;width:auto">"Mas o Wi‑Fi do shopping tem senha, não é seguro?"</td>
+            <td>Confusão entre a senha da rede e a proteção do site</td>
+            <td>Acrescentar: a senha do Wi‑Fi protege contra quem está fora; não protege de quem controla o aparelho</td>
+          </tr>
+          <tr>
+            <td style="font-family:inherit;color:inherit;width:auto">"E se eu já digitei minha senha assim?"</td>
+            <td>Faltou o que fazer depois do erro</td>
+            <td>Acrescentar um quarto conselho: trocar a senha e ver os acessos recentes da conta</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="aviso">
+      <strong>Guardem as duas versões.</strong> Criem
+      <code>cartilha-v2.html</code> em vez de sobrescrever a primeira. Ter as
+      duas lado a lado no repositório <em>é</em> a evidência de retorno — e é o
+      que vocês projetam na apresentação quando ele pedir o antes e o depois.
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> Anotar na hora</h2>
+    <p>
+      Preencham isto no mesmo dia, ainda no local. O
+      <code>e5-seguranca/cartilha/README.md</code> tem estes mesmos campos para
+      vocês copiarem para o repositório depois.
+    </p>
+    <div class="campos">
+      <div class="campo">
+        <span class="rot">Onde e quando</span>
+        <div class="linha"></div>
+        <small>Local, data e horário. Duração real da conversa.</small>
+      </div>
+      <div class="campo">
+        <span class="rot">Para quem, e quantas pessoas</span>
+        <div class="linha"></div>
+        <small>Número exato. "Umas quinze" vale menos que "quatorze".</small>
+      </div>
+      <div class="campo">
+        <span class="rot">O que perguntaram</span>
+        <div class="linha"></div>
+        <div class="linha"></div>
+        <small>Nas palavras deles. Anotem também o que ninguém entendeu de primeira.</small>
+      </div>
+      <div class="campo">
+        <span class="rot">O que mudamos por causa disso</span>
+        <div class="linha"></div>
+        <small>Preenchido depois, quando a v2 estiver pronta. É a linha que vale o degrau.</small>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> Entregar no formulário</h2>
+    <ul class="passos">
+      <li><span><strong>Identifiquem o grupo uma vez.</strong> Fica salvo no
+      navegador e serve para as cinco entregas — usem sempre o mesmo navegador,
+      da mesma pessoa.</span></li>
+      <li><span><strong>Colem o link do repositório:</strong>
+      <code>https://github.com/lgtmartins/redes-lab-grupo07</code></span></li>
+      <li><span><strong>Anexem as evidências.</strong> Limite de 4 arquivos e
+      20 MB. Para a E5, os quatro que importam são
+      <code>evidencias/verificacao.txt</code>, <code>claro.pcap</code>,
+      <code>cifrado.pcap</code> e o registro da apresentação (foto ou
+      lista).</span></li>
+      <li><span><strong>Guardem o recibo por e-mail.</strong> Cada integrante
+      recebe uma cópia — é o comprovante de que a entrega existiu.</span></li>
+    </ul>
+    <div class="aviso">
+      <strong>Antes de enviar, rodem uma vez no Cloud Shell.</strong> O que é
+      corrigido é o repositório clonado numa máquina limpa, não a de vocês.
+      Já testamos e passa — mas se vocês commitarem mais alguma coisa depois
+      disto, testem de novo.
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Os seis minutos, cronometrados</h2>
+    <p>
+      Não são slides: é a rede subindo ao vivo, projetada, a partir do
+      repositório. Aos seis minutos encerra. <strong>Todos os três
+      falam</strong> — dividam antes e ensaiem com relógio.
+    </p>
+
+    <div class="cronometro">
+      <div class="bloco">
+        <div class="tempo"><b>0:00</b>30 s</div>
+        <div class="conteudo">
+          <span class="quem">quem clona e digita</span>
+          <h3>A rede sobe</h3>
+          <p>Cloud Shell projetado. <code>git clone</code> do repositório e
+          <code>make base &amp;&amp; make up E=2 &amp;&amp; make verificar E=2</code>.
+          Enquanto constrói, apresentem o grupo e digam qual entrega
+          escolheram.</p>
+          <p><strong>Deixem rodando e sigam falando.</strong> O verde aparece
+          sozinho — parar para olhar a tela queima o tempo de vocês.</p>
+        </div>
+      </div>
+      <div class="bloco">
+        <div class="tempo"><b>0:30</b>2 min</div>
+        <div class="conteudo">
+          <span class="quem">quem explica a evidência</span>
+          <h3>A evidência — escolham uma só</h3>
+          <p>A recomendação é a <strong>E2 no Wireshark</strong>: é a prova mais
+          forte que vocês têm e a mais difícil de contestar. Abram
+          <code>perna-a.pcap</code> e <code>perna-b.pcap</code> lado a lado e
+          mostrem, no mesmo pacote:</p>
+          <p>IP de origem <span class="dado">10.0.10.10</span> igual nos dois ·
+          MAC de origem <span class="dado">9e:1b:1f:f4:96:4e</span> contra
+          <span class="dado">e6:40:be:31:ec:51</span> · carimbos
+          <span class="dado">.790305</span> e <span class="dado">.790334</span>,
+          29 µs de diferença.</p>
+          <p>Esse último número é o que responde "como vocês sabem que é o
+          mesmo pacote e não dois?". Guardem-no para quando perguntarem.</p>
+        </div>
+      </div>
+      <div class="bloco">
+        <div class="tempo"><b>2:30</b>2 min</div>
+        <div class="conteudo">
+          <span class="quem">quem apresentou a cartilha</span>
+          <h3>A cartilha</h3>
+          <p>O que produziram, <strong>para quem</strong>, onde apresentaram e
+          o que ouviram de volta. Projetem a v1 e a v2 lado a lado e apontem a
+          mudança concreta: "acrescentamos isto porque a dona Maria perguntou
+          aquilo".</p>
+          <p>Vale 0,3 na apresentação e é o que separa 1,7 de 2,0 na Extensão —
+          os dois pontos dependem da <em>mesma</em> história bem contada.</p>
+        </div>
+      </div>
+      <div class="bloco">
+        <div class="tempo"><b>4:30</b>1,5 min</div>
+        <div class="conteudo">
+          <span class="quem">quem for sorteado</span>
+          <h3>A pergunta sorteada</h3>
+          <p>Uma das 12 da lista pública. Todas têm resposta nas medições de
+          vocês — a tabela abaixo diz onde cada uma está.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> As 12 perguntas e onde está a resposta</h2>
+    <p>
+      Nenhuma pede decoreba. Todas se respondem com um número que vocês
+      mediram. Estudem pelo próprio <code>README.md</code> do repositório — foi
+      escrito para isso.
+    </p>
+    <div class="tabela-wrap">
+      <table>
+        <thead>
+          <tr><th></th><th>A pergunta, em resumo</th><th>O número ou fato de vocês</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td><code>Network is unreachable</code> × tempo esgotado</td><td>O pacote nem saiu: falha na origem, camada 3</td></tr>
+          <tr><td>2</td><td>256 endereços, 254 máquinas</td><td>Rede <span class="dado">.0</span> e broadcast <span class="dado">.255</span></td></tr>
+          <tr><td>3</td><td>O que muda no pacote ao atravessar o roteador</td><td>IP igual, os 4 MACs diferentes</td></tr>
+          <tr><td>4</td><td>Para que serve o TTL</td><td><span class="dado">64 → 63</span>; sem ele, pacote em círculo eterno</td></tr>
+          <tr><td>5</td><td>Réplica morta × particionada</td><td>Indistinguíveis: os dois casos são silêncio</td></tr>
+          <tr><td>6</td><td>Cliente que espera para sempre</td><td>Trava quem chamou, em cadeia. Por isso <code>-m 1</code></td></tr>
+          <tr><td>7</td><td>Por que trocar a rota estática</td><td>Ela não voltou nem quando o cabo voltou</td></tr>
+          <tr><td>8</td><td>Convergência com 50 roteadores</td><td>Mediram <span class="dado">21 s, 30 s, 14 s</span> com 3</td></tr>
+          <tr><td>9</td><td>Enlace caindo nas duas pontas</td><td>De um lado só, o outro anuncia rota morta até 180 s</td></tr>
+          <tr><td>10</td><td>Por que capturar no roteador</td><td>Rede comutada: só quem está no caminho vê</td></tr>
+          <tr><td>11</td><td>O que o cadeado protege</td><td>Sigilo sim, identidade não</td></tr>
+          <tr><td>12</td><td>Por que o navegador reclama do certificado</td><td>Autoassinado: ninguém confiável avalizou</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alerta">
+      <strong>Se o Cloud Shell falhar por motivo alheio a vocês</strong> — rede
+      da faculdade, conta bloqueada — mostrem o repositório e as evidências
+      gravadas. A nota da primeira linha cai pela metade, não a zero. O que não
+      recupera ponto é chegar sem repositório.
+    </div>
+  </section>
+
+  <footer>
+    grupo-07 · Luiz Guilherme Tiritan Martins, Pedro Guermandi Bressan e
+    Gustavo Messa Corbe · Redes e Sistemas Distribuídos ·
+    <a href="https://github.com/lgtmartins/redes-lab-grupo07">github.com/lgtmartins/redes-lab-grupo07</a>
+  </footer>
+
+</div>
