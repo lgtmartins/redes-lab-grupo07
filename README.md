@@ -210,6 +210,40 @@ Daí o resultado impresso pela verificação: mesmo IP de origem, MACs de origem
 diferentes. A carga de camada 3 atravessou inteira; o envelope de camada 2 foi
 jogado fora e refeito em cada trecho.
 
+### O print: [`e2-roteador/evidencias/encapsulamento.png`](e2-roteador/evidencias/encapsulamento.png)
+
+O mesmo pacote, aberto nas duas pernas do roteador, com os campos marcados.
+Cinco leituras saem dele, e as duas últimas nós não tínhamos planejado —
+apareceram quando abrimos o Wireshark:
+
+| Campo | Perna A | Perna B | |
+|---|---|---|---|
+| Ethernet · Source | `e2:3d:a8:bb:e5:59` | `92:6a:ca:a7:86:ef` | mudou |
+| Ethernet · Destination | `9a:a4:97:21:d2:0c` | `7a:18:73:29:93:86` | mudou |
+| IPv4 · Source | `10.0.10.10` | `10.0.10.10` | **não** mudou |
+| IPv4 · Destination | `10.0.20.10` | `10.0.20.10` | **não** mudou |
+| IPv4 · Time to Live | `64` | `63` | mudou |
+| IPv4 · Identification | `0x1b0e` | `0x1b0e` | **não** mudou |
+| IPv4 · Header Checksum | `0xed87` | `0xee87` | mudou |
+
+**O `Identification` idêntico é o que fecha a prova.** Sem ele, alguém poderia
+objetar que são dois pacotes diferentes capturados por acaso — o ping manda
+vários. Mas o campo `Identification` é o número de série que a origem carimba
+em cada pacote que emite: `0x1b0e` nas duas pernas significa que é o **mesmo
+pacote**, não dois parecidos. Os carimbos de tempo reforçam: `.120754` e
+`.120766`, 12 microssegundos de diferença.
+
+**O `Header Checksum` mudou, e mudou pela quantidade exata.** De `0xed87` para
+`0xee87` — subiu `0x0100`. Isso não é coincidência: o TTL ocupa o byte alto de
+uma das palavras de 16 bits do cabeçalho, então diminuir 1 no TTL diminui
+`0x0100` naquela palavra, e o checksum, que é o complemento de um da soma,
+sobe exatamente `0x0100`. O roteador não recalculou o cabeçalho inteiro: ele
+ajustou o checksum de forma incremental, que é o que a RFC 1624 descreve.
+Fazer a conta completa a cada salto seria caro demais.
+
+Ou seja: o roteador **não é um repetidor**. Ele desmonta o quadro, mexe no
+cabeçalho IP (TTL e checksum), monta um quadro novo — e não toca em mais nada.
+
 Duas consequências que valem guardar:
 
 * **O MAC precisa mudar** porque o segmento B é outro domínio de camada 2. O
