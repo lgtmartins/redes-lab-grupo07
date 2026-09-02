@@ -356,9 +356,23 @@ o cadeado promete são diferentes, e essa distinção entra na cartilha.
 **A cartilha** está em [`e5-seguranca/cartilha/`](e5-seguranca/cartilha/), com
 a captura do próprio grupo embutida no arquivo.
 
-**O registro da atividade de extensão** — para quem apresentamos, quantas
-pessoas, o que perguntaram e o que mudamos por causa disso — fica em
-[`e5-seguranca/extensao/`](e5-seguranca/extensao/).
+**O registro da atividade de extensão** fica em
+[`e5-seguranca/extensao/`](e5-seguranca/extensao/): apresentamos a 4
+familiares entre 55 e 82 anos, e nenhuma das três perguntas que ouvimos era
+sobre o assunto da cartilha. Todas eram sobre golpe por mensagem — voz
+imitada, tela falsa de banco, link clicado sem querer.
+
+Esse é o achado da atividade, e ele custa reconhecer: escrevemos o material a
+partir do que **nós** medimos, não a partir do que o público **teme**. A
+captura de pacote prova um risco real, mas não era o risco que aquelas quatro
+pessoas encontram na vida delas. A diferença é o vetor — a cartilha fala de
+quem escuta no meio do caminho; elas perguntaram sobre quem chega pela frente
+e mente.
+
+A [`cartilha-v2.html`](e5-seguranca/cartilha/cartilha-v2.html) responde às três
+perguntas numa seção nova, sem abandonar a captura. A v1 continua no
+repositório, intocada: a comparação entre as duas é a evidência de que houve
+retorno e mudança.
 
 ## Onde isto foi verificado
 
